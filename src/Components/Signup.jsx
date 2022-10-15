@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import app from '../firebase.init';
 import Swal from 'sweetalert2'
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from 'firebase/auth'
+import { Link } from 'react-router-dom';
 
 const auth = getAuth(app)
 
@@ -108,8 +109,8 @@ const Signup = () => {
 			</svg>
 		</button>
 	</div>
-	<p className="text-xs text-center sm:px-6 dark:text-gray-400">Don't have an account?
-		<a rel="noopener noreferrer" href="# " className="underline dark:text-gray-100">Sign up</a>
+	<p className="text-xs text-center sm:px-6 dark:text-gray-400">Al ready have account?
+		<Link to='/signin' rel="noopener noreferrer" href="# " className="underline dark:text-gray-100">Log in</Link>
 	</p>
 </div>
    

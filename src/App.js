@@ -4,6 +4,8 @@ import Signin from './Components/Signin';
 import Signup from './Components/Signup';
 import Error from './Components/Error'
 import Main from './layouts/Main';
+import WrongPage from './Components/WrongPage';
+import RightPage from './Components/RightPage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -21,9 +23,18 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <Signup></Signup>
+      },
+      {
+        path:'/right',
+        element: <RightPage></RightPage>
       }
     ]
+  },
+  {
+    path: '/wrong',
+    element: <WrongPage></WrongPage>
   }
+  
 ])
 function App() {
   return (
