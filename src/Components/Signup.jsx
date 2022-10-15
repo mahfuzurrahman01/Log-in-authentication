@@ -7,17 +7,18 @@ const auth = getAuth(app)
 
 const Signup = () => {
     const [error,setError] = useState('')
-    const [strong , setStrong] = useState(false)
+   
     const passwordCheck = event =>{
         const password = event.target.value;
         if(!/(?=.*[A-Z].{8,}.*[a-z])/.test(password)){
-            setStrong(false)
+           
             setError('password must have 1 uppercase ,1 lowercase and must be 8 character');
             console.log(error)
+            return;
         }
         else{
             setError('')
-            setStrong(true);
+           
         }
     }
     
@@ -80,9 +81,7 @@ const Signup = () => {
 			<input onBlur={passwordCheck} required type="password" name="password" id="password" placeholder="Your Password" className="w-full px-4 py-3 rounded-md text-gray-800" />
 			<div className="flex justify-end text-xs dark:text-gray-400">
 				<p className='text-sm text-red-700'>{error}</p>
-                {
-                    strong && <p className='text-green-600'>Its a good match! go ahead!</p>
-                }
+               
 			</div>
 		</div>
 		<button type='submit' className="block w-full p-3 text-center rounded-sm bg-violet-400 hover:bg-violet-500 text-white font-semibold">Sign up</button>
