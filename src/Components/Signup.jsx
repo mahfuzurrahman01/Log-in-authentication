@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
 import app from '../firebase.init';
 import Swal from 'sweetalert2'
-import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from 'firebase/auth'
 
 const auth = getAuth(app)
 
 const Signup = () => {
-   
     const [error,setError] = useState('')
+    const [strong , setStrong] = useState(false)
+    const passwordCheck = event =>{
+        const password = event.target.value;
+        if(!/(?=.*[A-Z].{8,}.*[a-z])/.test(password)){
+            setStrong(false)
+            setError('password must have 1 uppercase ,1 lowercase and must be 8 character');
+            console.log(error)
+        }
+        else{
+            setError('')
+            setStrong(true);
+        }
+    }
+    
     const signupHandler = (event) =>{
+        
         event.preventDefault()
-   
         const form = event.target;
         const userName = form.username.value;
         const email = form.email.value;
@@ -19,14 +32,9 @@ const Signup = () => {
         .then(result =>{
             const user = result.user;
             console.log(user)
-         
             displayUser(userName)
             form.reset()
-            Swal.fire(
-                'Great!',
-                'Your account successfully created!',
-                'success'
-              )
+            verifyEmail();
         })
         .catch(error =>{
             console.log('error: ' , error)
@@ -44,7 +52,16 @@ const Signup = () => {
             console.log(error)
         })
     }
-
+    const verifyEmail = () =>{
+        sendEmailVerification(auth.currentUser)
+        .then(() =>{
+            Swal.fire(
+                'Great!',
+                'Please check your email and verify first!',
+                'success'
+              )
+        })
+    }
     return (
        
            <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-600 my-10 mx-auto text-white">
@@ -60,10 +77,12 @@ const Signup = () => {
 		</div>
 		<div className="space-y-1 text-sm">
 			<label htmlFor="password" className="block dark:text-gray-400">Password</label>
-			<input required type="password" name="password" id="password" placeholder="Your Password" className="w-full px-4 py-3 rounded-md text-gray-800" />
+			<input onBlur={passwordCheck} required type="password" name="password" id="password" placeholder="Your Password" className="w-full px-4 py-3 rounded-md text-gray-800" />
 			<div className="flex justify-end text-xs dark:text-gray-400">
 				<p className='text-sm text-red-700'>{error}</p>
-               
+                {
+                    strong && <p className='text-green-600'>Its a good match! go ahead!</p>
+                }
 			</div>
 		</div>
 		<button type='submit' className="block w-full p-3 text-center rounded-sm bg-violet-400 hover:bg-violet-500 text-white font-semibold">Sign up</button>
