@@ -13,7 +13,7 @@ const Header = () => {
 			</svg>
 		</a>
 		<div className="items-center flex-shrink-0 hidden lg:flex lg:gap-4 md:gap-2">
-			<NavLink to='/signin'className={({isActive})=> isActive ? "px-8 py-2 bg-slate-500 text-white rounded font-semibold" : "self-center px-8 py-2 hover:bg-slate-500 bg-slate-400 text-white rounded font-semibold"}>Sign in</NavLink>
+			<NavLink to='/signin'className={({isActive})=> isActive ? "px-8 py-2 bg-slate-500 text-white rounded font-semibold" : "self-center px-8 py-2 hover:bg-slate-500 bg-slate-400 text-white rounded font-semibold"}>Log in</NavLink>
 			<NavLink to='/signup' className={({isActive})=> isActive ? "px-8 py-2 bg-slate-500 text-white rounded font-semibold" : "self-center px-8 py-2 hover:bg-slate-500 bg-slate-400 text-white rounded font-semibold"}>Sign up</NavLink>
 		</div>
 		<button className="p-4 lg:hidden">

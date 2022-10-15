@@ -21,7 +21,7 @@ const Signup = () => {
 				<a rel="noopener noreferrer" href="# ">Forgot Password?</a>
 			</div>
 		</div>
-		<button className="block w-full p-3 text-center rounded-sm bg-violet-300 hover:bg-violet-400 text-gray-800 font-semibold">Sign up</button>
+		<button className="block w-full p-3 text-center rounded-sm bg-violet-400 hover:bg-violet-500 text-white font-semibold">Sign up</button>
 	</form>
 	<div className="flex items-center pt-4 space-x-1">
 		<div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
