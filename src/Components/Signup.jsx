@@ -1,27 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
+import app from '../firebase.init';
+import Swal from 'sweetalert2'
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth'
+
+const auth = getAuth(app)
 
 const Signup = () => {
+   
+    const [error,setError] = useState('')
+    const signupHandler = (event) =>{
+        event.preventDefault()
+   
+        const form = event.target;
+        const userName = form.username.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        createUserWithEmailAndPassword(auth,email,password)
+        .then(result =>{
+            const user = result.user;
+            console.log(user)
+         
+            displayUser(userName)
+            form.reset()
+            Swal.fire(
+                'Great!',
+                'Your account successfully created!',
+                'success'
+              )
+        })
+        .catch(error =>{
+            console.log('error: ' , error)
+            setError(error.message);
+        })
+    }
+    const displayUser = (name) =>{
+        updateProfile(auth.currentUser,{
+            displayName: name
+        })
+        .then(()=>{
+            console.log('display name updated ')
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+    }
+
     return (
        
            <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-600 my-10 mx-auto text-white">
 	<h1 className="text-2xl font-bold text-center">Register</h1>
-	<form novalidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
+	<form onSubmit={signupHandler} noValidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
 		<div className="space-y-1 text-sm">
-			<label for="username" className="block dark:text-gray-400">Username</label>
-			<input required type="text" name="username" id="username" placeholder="Your name" className="w-full px-4 py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+			<label htmlFor="username" className="block dark:text-gray-400">Username</label>
+			<input required type="text" name="username" id="username" placeholder="Your name" className="w-full px-4 py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 text-gray-800 " />
 		</div>
 		<div className="space-y-1 text-sm">
-			<label for="useremail" className="block dark:text-gray-400">User Email</label>
-			<input required type="email" name="email" id="username" placeholder="Your email" className="w-full px-4 py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+			<label htmlFor="useremail" className="block dark:text-gray-400">User Email</label>
+			<input required type="email" name="email" id="email" placeholder="Your email" className="w-full px-4 py-3 rounded-md text-gray-800" />
 		</div>
 		<div className="space-y-1 text-sm">
-			<label for="password" className="block dark:text-gray-400">Password</label>
-			<input required type="password" name="password" id="password" placeholder="Your Password" className="w-full px-4 py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+			<label htmlFor="password" className="block dark:text-gray-400">Password</label>
+			<input required type="password" name="password" id="password" placeholder="Your Password" className="w-full px-4 py-3 rounded-md text-gray-800" />
 			<div className="flex justify-end text-xs dark:text-gray-400">
-				<a rel="noopener noreferrer" href="# ">Forgot Password?</a>
+				<p className='text-sm text-red-700'>{error}</p>
+               
 			</div>
 		</div>
-		<button className="block w-full p-3 text-center rounded-sm bg-violet-400 hover:bg-violet-500 text-white font-semibold">Sign up</button>
+		<button type='submit' className="block w-full p-3 text-center rounded-sm bg-violet-400 hover:bg-violet-500 text-white font-semibold">Sign up</button>
 	</form>
 	<div className="flex items-center pt-4 space-x-1">
 		<div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
