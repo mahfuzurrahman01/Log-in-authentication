@@ -6,11 +6,11 @@ import app from '../firebase.init';
 const auth = getAuth(app);
 const Signin = () => {
     
-    const [error, setError] = useState('');
+   
     const [email,setEmail] = useState('');
     const loginHandler = event => {
         event.preventDefault()
-        setError('')
+     
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
@@ -36,7 +36,7 @@ const Signin = () => {
                   })
             })
             .catch(error => {
-                setError(error.message);
+          
                 console.log(error)
                 const Toast = Swal.mixin({
                     toast: true,
@@ -111,7 +111,7 @@ const forgotHandler = () =>{
                             </div>
                             <input type="password" name="password" id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md text-gray-800" />
                             <div className='flex justify-end'>
-                                <p className='text-red-600'>{error}</p>
+                                
                             </div>
                         </div>
                     </div>
